@@ -13,12 +13,6 @@ all copies or substantial portions of the Software.
 '''
 
 from tw_day import core
-import re
-
-from datetime import datetime
-import re
-from dateutil.rrule import rrule, DAILY
-
 
 # is tw holiday
 def isDay(strDt):

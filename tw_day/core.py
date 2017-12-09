@@ -23,17 +23,15 @@ class NotSupportYearException(Exception):
     pass
 
 class DataReader:
-    """ call DataReader to read data from file
+    """ read data/{year}.holiday and pre-process it
 
     The usage of this class:
-        e.g.
-            # get content from data/2017.holiday
-            data = DataReader('2017').data
+        data = DataReader('2017').data
 
     You can inherit this class like StockDataReader
 
     Attributes:
-        _year (int): to read {year}.holiday
+        _year (int): the data year
         _data (dict): the json file content
 
     """
@@ -78,6 +76,8 @@ class DataReader:
             data[strDt] = value
 
     def _preProcess(self, data):
+        # do pre-process for data
+
         _data = {}
         for key, value in data.items():
             dtRange = DataReader._parseDtRange(key, self._year)
@@ -90,6 +90,8 @@ class DataReader:
         return _data
 
     def _getOpenFilePath(self):
+        # acoording self._year to get full file path
+
         this_dir, this_filename = os.path.split(__file__)
         if not this_dir:
             this_dir = "."
@@ -103,8 +105,7 @@ class HolidayDataReader(DataReader):
 
 
 class StockDataReader(DataReader):
-
-    # decorator for change "data" in memory content from 'stock_close' field
+    # parse 'stock_close' information and add information into data
     def _extraProcess(func):
         def _retFunc(self, data):
             _data = func(self, data)
@@ -125,17 +126,15 @@ class StockDataReader(DataReader):
         return super()._preProcess(data)
 
 
-# is tw stock market close day
 def isDay(strDt, DataReader):
     """
-    This is function is core of 'holiday.isHoliday()' and 'stock.isStockMarketCloseDay()'
+    This is function is core of 'holiday.isDay()' and 'stock_close.isDay()'
 
     Args:
         strDt: datetime str (e.g. '20171104')
 
     Returns:
-        true: data[date] == true
-        false: data[date] == false
+        bool: DataReader.data[date]
 
     Raises:
         NotSupportYearException: Raises an exception if "data/{year}.holiday not exist"

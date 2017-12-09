@@ -13,9 +13,6 @@ all copies or substantial portions of the Software.
 '''
 
 from tw_day import core
-import re
-from datetime import datetime
-from dateutil.rrule import rrule, DAILY
 
 # is tw stock market close day
 def isDay(strDt):
@@ -30,7 +27,7 @@ def isDay(strDt):
         false: market open
 
     Raises:
-        NotSupportYearException: Raises an exception if file data/{year}_close not exist
+        NotSupportYearException: Raises an exception if file data/{year}_holiday not exist
     """
     return core.isDay(strDt, core.StockDataReader)
 
