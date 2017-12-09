@@ -5,7 +5,7 @@ A python package which help your program to decide whether the day is Taiwan hol
 
 ----
 ## Install
-pip install .
+pip install tw_day
 
 ----
 ## Usage
